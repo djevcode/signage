@@ -110,6 +110,13 @@
                 showSystemPlaceholder("Σφάλμα σύνδεσης δικτύου");
             }
         }
+        function showSystemPlaceholder(msg) {
+            document.getElementById('window-viewport').innerHTML = `
+                <div class="myscreen active" style="justify-content:center; align-items:center; background:#0d0e10; height:100%; display:flex; flex-direction:column;">
+                    <div style="font-size:3rem; margin-bottom:15px;">🏛️</div>
+                    <div style="font-size:1.8rem; color:#ffcc00; font-family:sans-serif; text-align:center; padding:20px;">${msg}</div>
+                </div>`;
+        }
         function preloadPosterAssets(eventList, callback) {
             let loadedCount = 0;
             const totalImages = eventList.length;
