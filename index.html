@@ -53,13 +53,18 @@
                 const response = await fetch('events.json?t=' + new Date().getTime());
                 const allFetchedEvents = await response.json();
 
+                // Reset today's calendar marker cleanly
                 const today = new Date();
                 today.setHours(0,0,0,0);
 
                 events = allFetchedEvents.filter(event => {
+                    // Safe string parsing converts YYYY-MM-DD cleanly across all browsers
                     const eventDate = new Date(event.date + "T00:00:00");
+
+                    // Simple validation check: is the event date today or in the future?
                     const isUpcoming = eventDate >= today;
                     const isForThisScreen = !screenTarget || event.screen === "all" || event.screen === screenTarget;
+
                     return isUpcoming && isForThisScreen;
                 });
 
