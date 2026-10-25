@@ -81,19 +81,35 @@
 
         let events = [];
 
-        function loadEventsLocal() {
-            const today = new Date();
-            today.setHours(0,0,0,0);
-            events = allFetchedEvents.filter(event => new Date(event.date + "T00:00:00") >= today);
+        async function loadLiveEvents() {
+            try {
+                const response = await fetch('events.json?t=' + new Date().getTime());
+                const allFetchedEvents = await response.json();
 
-            if (events.length > 0) {
-                preloadPosterAssets(events, () => {
-                    buildWholeScreens();
-                    rotationTimer = setTimeout(slideNextScreen, INTERVAL_TIME);
+                const today = new Date();
+                today.setHours(0,0,0,0);
+
+                events = allFetchedEvents.filter(event => {
+                    const eventDate = new Date(event.date + "T00:00:00");
+                    const isUpcoming = eventDate >= today;
+                    const isForThisScreen = !screenTarget || event.screen === "all" || event.screen === screenTarget;
+                    return isUpcoming && isForThisScreen;
                 });
+
+                if (events.length > 0) {
+                    preloadPosterAssets(events, () => {
+                        buildWholeScreens();
+                        if (!rotationTimer) {
+                            rotationTimer = setTimeout(slideNextScreen, INTERVAL_TIME);
+                        }
+                    });
+                } else {
+                    showSystemPlaceholder("Δεν υπάρχουν προγραμματισμένες εκδηλώσεις");
+                }
+            } catch (error) {
+                showSystemPlaceholder("Σφάλμα σύνδεσης δικτύου");
             }
         }
-
         function preloadPosterAssets(eventList, callback) {
             let loadedCount = 0;
             const totalImages = eventList.length;
@@ -177,7 +193,7 @@
             rotationTimer = setTimeout(slideNextScreen, INTERVAL_TIME);
         }
 
-        window.onload = loadEventsLocal;
+        window.onload = loadLiveEvents;
     </script>
 </body>
 </html>
