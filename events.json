@@ -1,0 +1,29 @@
+﻿[
+  {
+    "date": "2026-11-15",
+    "time": "19:30",
+    "title": "Φεστιβάλ Φαγητού",
+    "maker": "Πολιτιστικός Δήμος",
+    "location": "Κεντρική Πλατεία",
+    "image": "posters/food.jpg",
+    "screen": "all"
+  },
+  {
+    "date": "2026-11-16",
+    "time": "20:30",
+    "title": "Φεστιβάλ",
+    "maker": "Δήμος",
+    "location": "Πλατεία",
+    "image": "posters/rock.jpg",
+    "screen": "all"
+  },
+  {
+    "date": "2026-11-22",
+    "time": "21:00",
+    "title": "Συναυλία Ροκ Νεολαίας",
+    "maker": "Συμβούλιο Νέων",
+    "location": "Δημοτικό Θέατρο",
+    "image": "posters/girl.jpg",
+    "screen": "cultural"
+  }
+]
